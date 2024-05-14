@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import Movies from '../../classes/Movies.js'
 
@@ -19,9 +19,13 @@ const Sliders = () => {
     refetch,
   } = useGetMovieQuery()
   console.log(movies)
+  useEffect(()=>{
+    refetch()
+  },[])
   return (
     <>
       <Swiper
+      style={{marginTop:"50px"}}
         slidesPerView={3}
         spaceBetween={20}
         pagination={{
@@ -32,7 +36,7 @@ const Sliders = () => {
       >
         {movies && movies.map((e) => {
             return(
-              <SwiperSlide  key={e.id}>
+              <SwiperSlide  key={e.id}  >
               <div  className='card'>
                 <img style={{ width: '100%', height: "300px" }} src={e.posterImg} alt="" />
                 <div>

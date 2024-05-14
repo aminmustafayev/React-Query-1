@@ -4,6 +4,7 @@ class Movies {
         this.posterImg=posterImg,
         this.genre=genre
         this.releaseYear=releaseYear
+        this.id=this.id
     }
 }
 export default Movies

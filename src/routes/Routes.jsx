@@ -21,7 +21,7 @@ export const Routes =[
             },
             {
                 path:"addpages",
-                element:<AddPages/>
+                element:<AddPages />
             },
         ]
     }

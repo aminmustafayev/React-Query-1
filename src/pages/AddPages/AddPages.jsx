@@ -1,11 +1,10 @@
-import { useState } from 'react';
-import { Input, Button } from 'antd';
-import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import Movies from '../../classes/Movies';
-import MoviesSchema from '../../validation/movies.validation';
-import Swal from 'sweetalert2';
-import { usePostMoviesMutation } from '../../services/moviesQuerySlice';
+import { useState } from "react";
+import { Input, Button } from "antd";
+import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+import MoviesSchema from "../../validation/movies.validation";
+import Swal from "sweetalert2";
+import { usePostMoviesMutation  } from "../../services/moviesQuerySlice";
 
 const AddPage = () => {
   const [postMovies] = usePostMoviesMutation();
@@ -16,18 +15,22 @@ const AddPage = () => {
       title: "",
       posterImg: "",
       genre: "",
-      releaseYear: ""
+      releaseYear: "",
     },
     onSubmit: async (values) => {
-      const newMovie = new Movies(values.title, values.posterImg, values.genre, values.releaseYear);
       try {
-        await postMovies(newMovie); 
+        await postMovies({
+          title: values.title,
+          posterImg: values.posterImg,
+          genre: values.genre,
+          releaseYear: values.releaseYear,
+        });
         Swal.fire({
           position: "top-center",
           icon: "success",
           title: "Your work has been saved",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         }).then(() => navigate("/"));
       } catch (error) {
         console.error("Error adding movie:", error);
@@ -35,13 +38,16 @@ const AddPage = () => {
 
       formik.resetForm();
     },
-    validationSchema: MoviesSchema
+    validationSchema: MoviesSchema,
   });
 
   return (
     <>
-      <h1 style={{ textAlign: "center", marginTop: '55px' }}>Add New Movies</h1>
-      <form onSubmit={formik.handleSubmit} style={{ width: "50%", margin: "20px auto" }}>
+      <h1 style={{ textAlign: "center", marginTop: "55px" }}>Add New Movies</h1>
+      <form
+        onSubmit={formik.handleSubmit}
+        style={{ width: "50%", margin: "20px auto" }}
+      >
         <Input
           style={{ marginBottom: "10px" }}
           placeholder="Title"
@@ -50,7 +56,9 @@ const AddPage = () => {
           onChange={formik.handleChange}
           value={formik.values.title}
         />
-        {formik.errors.title && <span style={{ color: "red" }}>{formik.errors.title}</span>}
+        {formik.errors.title && (
+          <span style={{ color: "red" }}>{formik.errors.title}</span>
+        )}
 
         <Input
           style={{ marginBottom: "10px" }}
@@ -60,7 +68,9 @@ const AddPage = () => {
           onChange={formik.handleChange}
           value={formik.values.posterImg}
         />
-        {formik.errors.posterImg && <span style={{ color: "red" }}>{formik.errors.posterImg}</span>}
+        {formik.errors.posterImg && (
+          <span style={{ color: "red" }}>{formik.errors.posterImg}</span>
+        )}
 
         <Input
           style={{ marginBottom: "10px" }}
@@ -70,7 +80,9 @@ const AddPage = () => {
           onChange={formik.handleChange}
           value={formik.values.genre}
         />
-        {formik.errors.genre && <span style={{ color: "red" }}>{formik.errors.genre}</span>}
+        {formik.errors.genre && (
+          <span style={{ color: "red" }}>{formik.errors.genre}</span>
+        )}
 
         <Input
           style={{ marginBottom: "10px" }}
@@ -80,7 +92,9 @@ const AddPage = () => {
           onChange={formik.handleChange}
           value={formik.values.releaseYear}
         />
-        {formik.errors.releaseYear && <span style={{ color: "red" }}>{formik.errors.releaseYear}</span>}
+        {formik.errors.releaseYear && (
+          <span style={{ color: "red" }}>{formik.errors.releaseYear}</span>
+        )}
 
         <Button type="primary" htmlType="submit">
           Add Movies
